@@ -3,7 +3,7 @@
 
 Download
 ====
-[demo](https://github.com/justloveouyangjie/TinGoLife/blob/master/TinGoLife/app-debug.apk)
+[demo](http://beta.qq.com/m/eaah)
 
 Dependencies
 ===
