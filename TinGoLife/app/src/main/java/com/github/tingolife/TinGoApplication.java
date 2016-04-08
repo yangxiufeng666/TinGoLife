@@ -10,6 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
@@ -24,6 +25,7 @@ public class TinGoApplication extends Application{
         super.onCreate();
         initImageloader();
         CrashReport.initCrashReport(getApplicationContext());
+        LeakCanary.install(this);
     }
     private void initImageloader(){
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(TinGoApplication.this);
