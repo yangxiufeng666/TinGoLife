@@ -10,6 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created with com.github.tingolife
@@ -22,6 +23,7 @@ public class TinGoApplication extends Application{
     public void onCreate() {
         super.onCreate();
         initImageloader();
+        CrashReport.initCrashReport(getApplicationContext());
     }
     private void initImageloader(){
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(TinGoApplication.this);

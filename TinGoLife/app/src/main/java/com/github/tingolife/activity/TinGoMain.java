@@ -17,6 +17,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.github.tingolife.R;
 import com.github.tingolife.fragment.PictureParentFragment;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class TinGoMain extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
