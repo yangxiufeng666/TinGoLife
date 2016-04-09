@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.github.tingolife.adapter.PictureAdapter;
 import com.github.tingolife.http.callback.StringCallBack;
+import com.github.tingolife.utils.MD5Util;
 import com.github.tingolife.widget.SpacesItemDecoration;
 import com.github.tingolife.http.OkHttpManager;
 import com.github.tingolife.R;
@@ -50,7 +52,6 @@ public class PictureFragment extends Fragment{
     protected RecyclerView recyclerView;
     private List<PictureListItem.TngouEntity> tngou;
     private PictureAdapter pictureAdapter;
-    private Handler mainHandler;
     private DisplayImageOptions options;
     private int lastVisibleItem;
     private int[] lastVisibleItems;
@@ -58,6 +59,7 @@ public class PictureFragment extends Fragment{
     private int pageNum=1;
     private boolean hasMore=true;
     private int id;
+    String tagUrl ;
     public static Fragment newInstance(int arg){
         PictureFragment fragment = new PictureFragment();
         Bundle bundle = new Bundle();
@@ -75,7 +77,7 @@ public class PictureFragment extends Fragment{
         rootView = inflater.inflate(R.layout.picture_fragment,container,false);
         ButterKnife.bind(this, rootView);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);//
+        recyclerView.setLayoutManager(layoutManager);
         tngou = new ArrayList<>();
         pictureAdapter = new PictureAdapter(tngou,getActivity());
         recyclerView.setAdapter(pictureAdapter);
@@ -87,7 +89,6 @@ public class PictureFragment extends Fragment{
                 super.onScrolled(recyclerView, dx, dy);
                 lastVisibleItems = layoutManager.findLastCompletelyVisibleItemPositions(null);
                 lastVisibleItem = Math.max(lastVisibleItems[0], lastVisibleItems[1]);
-                Log.e("item", "lastVisibleItem=" + lastVisibleItem);
             }
 
             @Override
@@ -103,35 +104,27 @@ public class PictureFragment extends Fragment{
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mainHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 2000);
-
+                pageNum = 1;
+                tngou.clear();
+                initData(id, 20, pageNum);
             }
         });
         // 这句话是为了，第一次进入页面的时候显示加载进度条
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
-        mainHandler = new Handler(Looper.getMainLooper());
         swipeRefreshLayout.setRefreshing(true);
         initData(id, 20, pageNum);
         return rootView;
     }
     private void initData(int id,int rows, final int page){
-        OkHttpManager.getOkHttpManager().asyncGet(TinGoApi.PIC_LIST_API + "?id=" + id + "&rows=" + rows + "&page=" + page, new StringCallBack() {
+        tagUrl = TinGoApi.PIC_LIST_API + "?id=" + id + "&rows=" + rows + "&page=" + page;
+        OkHttpManager.getOkHttpManager().asyncGet(tagUrl, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
                 Log.e("back", e.getLocalizedMessage());
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
+                swipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getActivity(), "请检查您的网络！！！", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -142,32 +135,18 @@ public class PictureFragment extends Fragment{
                 if (pictureListItem.getTngou().size() > 0) {
                     hasMore = true;
                     pageNum++;
-                    mainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            pictureAdapter.notifyDataSetChanged();
-                        }
-                    });
+                    pictureAdapter.notifyDataSetChanged();
                 } else {
                     hasMore = false;
-                    mainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), "没有更多图片了", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    Toast.makeText(getActivity(), "没有更多图片了", Toast.LENGTH_SHORT).show();
                 }
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        OkHttpManager.getOkHttpManager().cancelTag(MD5Util.getMD5String(tagUrl));
     }
 }

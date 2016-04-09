@@ -37,7 +37,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
         this.context = context;
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.default_pic)
-                .cacheInMemory(false)//不存内存,避免OOM
+                .cacheInMemory(false)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
                 .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
@@ -60,7 +60,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(context, PictureDetailActivity.class);
-                intent.putExtra("parentId", (long)tngouEntityList.get(position).getId());
+                intent.putExtra("parentId", (long) tngouEntityList.get(position).getId());
                 context.startActivity(intent);
             }
         });

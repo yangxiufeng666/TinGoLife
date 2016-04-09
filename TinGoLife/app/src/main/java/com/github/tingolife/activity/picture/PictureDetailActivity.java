@@ -25,6 +25,7 @@ import com.github.tingolife.R;
 import com.github.tingolife.constant.TinGoApi;
 import com.github.tingolife.domain.picture.PictureDetail;
 import com.github.tingolife.http.callback.StringCallBack;
+import com.github.tingolife.utils.MD5Util;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -43,6 +44,7 @@ import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 import okhttp3.Call;
 import uk.co.senab.photoview.PhotoView;
 
@@ -59,6 +61,7 @@ public class PictureDetailActivity extends AppCompatActivity{
     protected TextView titleTxtView;
     @Bind(R.id.count)
     protected TextView countTxtView;
+    String tagUrl ;
     private List<PictureDetail.ListEntity> pictureListEntity;
     private static DisplayImageOptions options;
     private PictureAdapter adapter;
@@ -116,10 +119,11 @@ public class PictureDetailActivity extends AppCompatActivity{
     }
 
     private void initData(long id){
-        OkHttpManager.getOkHttpManager().asyncGet(TinGoApi.PIC_DETAIL + "?id=" + id, new StringCallBack() {
+        tagUrl = TinGoApi.PIC_DETAIL + "?id=" + id;
+        OkHttpManager.getOkHttpManager().asyncGet(tagUrl, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
-
+                Toast.makeText(PictureDetailActivity.this, "请检查您的网络！！！", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -141,6 +145,13 @@ public class PictureDetailActivity extends AppCompatActivity{
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        OkHttpManager.getOkHttpManager().cancelTag(MD5Util.getMD5String(tagUrl));
+    }
+
     public static class OnePicture extends Fragment{
         View rootView;
         @Bind(R.id.photoView)
@@ -148,6 +159,8 @@ public class PictureDetailActivity extends AppCompatActivity{
         Bitmap loadedBitmap;
         @Bind(R.id.save)
         TextView save;
+        @Bind(R.id.loading)
+        MaterialProgressBar materialProgressBar;
         String suffix;
         public static Fragment newInstance(String arg){
             OnePicture fragment = new OnePicture();
@@ -171,22 +184,22 @@ public class PictureDetailActivity extends AppCompatActivity{
             ImageLoader.getInstance().displayImage(TinGoApi.PIC_SHOW + src, photoView, options, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
-
+                    materialProgressBar.setVisibility(View.VISIBLE);
                 }
 
                 @Override
                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
+                    materialProgressBar.setVisibility(View.VISIBLE);
                 }
 
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    materialProgressBar.setVisibility(View.GONE);
                     loadedBitmap = loadedImage;
                 }
 
                 @Override
                 public void onLoadingCancelled(String imageUri, View view) {
-
                 }
             });
             save.setOnClickListener(new View.OnClickListener() {

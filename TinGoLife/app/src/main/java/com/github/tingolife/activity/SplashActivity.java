@@ -13,13 +13,14 @@ import com.github.tingolife.R;
  * Date:2016/3/30
  * Time:16:34
  */
-public class SplashActivity extends BaseActivity{
+public class SplashActivity extends AppCompatActivity{
     private Handler handler;
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             Intent intent = new Intent(SplashActivity.this,TinGoMain.class);
             SplashActivity.this.startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             finish();
         }
     };

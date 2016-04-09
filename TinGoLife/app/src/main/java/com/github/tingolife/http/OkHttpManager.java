@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.github.tingolife.http.callback.CallBack;
+import com.github.tingolife.utils.MD5Util;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class OkHttpManager {
      * @param callBack
      */
     public void asyncGet(String url, final CallBack callBack) {
-        Request request = new Request.Builder().url(url).tag(url).build();
+        Request request = new Request.Builder().url(url).tag(MD5Util.getMD5String(url)).build();
         okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(final Call call, final IOException e) {
