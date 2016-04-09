@@ -3,7 +3,7 @@
 
 Download
 ====
-[demo](http://beta.qq.com/m/eaah)
+[demo](http://beta.qq.com/m/43gi)
 
 Dependencies
 ===
