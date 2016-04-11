@@ -189,7 +189,8 @@ public class PictureDetailActivity extends AppCompatActivity{
 
                 @Override
                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                    materialProgressBar.setVisibility(View.VISIBLE);
+                    materialProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(),"获取图片失败",Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -248,6 +249,7 @@ public class PictureDetailActivity extends AppCompatActivity{
             super(fm);
             options = new DisplayImageOptions.Builder()
                     .showImageOnLoading(R.drawable.defalut_load_img)
+                    .showImageOnFail(R.drawable.load_failed)
                     .cacheInMemory(false)//不存内存,避免OOM
                     .cacheOnDisk(true)
                     .considerExifParams(true)
