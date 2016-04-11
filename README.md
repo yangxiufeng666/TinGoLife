@@ -22,18 +22,9 @@ compile 'com.android.support:appcompat-v7:23.2.1'
         transitive = true
     }
 
-首页
+show
 ===
-![](https://github.com/justloveouyangjie/TinGoLife/blob/master/TinGoLife/1.png)
-
-图片分类
-===
-![](https://github.com/justloveouyangjie/TinGoLife/blob/master/TinGoLife/2.png)
-![](https://github.com/justloveouyangjie/TinGoLife/blob/master/TinGoLife/3.png)
-
-图片详情
-===
-![](https://github.com/justloveouyangjie/TinGoLife/blob/master/TinGoLife/4.png)
+![](https://github.com/babylikebird/TinGoLife/blob/master/TinGoLife/show.gif)
 
 感谢
 ===
