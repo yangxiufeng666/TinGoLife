@@ -17,13 +17,14 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.github.tingolife.R;
+import com.github.tingolife.fragment.LatestPictureFragment;
 import com.github.tingolife.fragment.PictureParentFragment;
 import com.tencent.bugly.crashreport.CrashReport;
 
 public class TinGoMain extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private PictureParentFragment pictureFragment;
-
+    private LatestPictureFragment latestPictureFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +48,11 @@ public class TinGoMain extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_gallery);
-        if (pictureFragment == null){
-            pictureFragment = new PictureParentFragment();
+        navigationView.setCheckedItem(R.id.nav_latest_gallery);
+        if (latestPictureFragment == null){
+            latestPictureFragment = new LatestPictureFragment();
         }
-        setFragment(pictureFragment);
+        setFragment(latestPictureFragment);
     }
 
     private void setFragment(Fragment fragment) {
@@ -92,49 +93,34 @@ public class TinGoMain extends BaseActivity
             }).show();
         }
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.tin_go_main, menu);
-        return true;
-    }*/
-
-/*    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_gallery) {
-            if (pictureFragment == null){
-                pictureFragment = new PictureParentFragment();
-            }
-            if (!pictureFragment.isVisible()) {
-                setFragment(pictureFragment);
-            }
-        } if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_setting) {
-            Intent intent = new Intent(this,SettingActivity.class);
-            startActivity(intent);
+        switch (id){
+            case R.id.nav_gallery:
+                if (pictureFragment == null){
+                    pictureFragment = new PictureParentFragment();
+                }
+                if (!pictureFragment.isVisible()) {
+                    setFragment(pictureFragment);
+                }
+                break;
+            case R.id.nav_latest_gallery:
+                if (latestPictureFragment == null){
+                    latestPictureFragment = new LatestPictureFragment();
+                }
+                if (!latestPictureFragment.isVisible()){
+                    setFragment(latestPictureFragment);
+                }
+                break;
+            case R.id.nav_setting:
+                Intent intent = new Intent(this,SettingActivity.class);
+                startActivity(intent);
+                break;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

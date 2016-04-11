@@ -2,22 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+
         <item
-            android:id="@+id/nav_food"
-            android:icon="@drawable/food"
-            android:title="健康食品" />
-        <item
-            android:id="@+id/nav_cook"
-            android:icon="@drawable/cook"
-            android:title="健康美食" />
+            android:id="@+id/nav_latest_gallery"
+            android:icon="@drawable/gallery"
+            android:title="最新美图" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/gallery"
-            android:title="生活美图" />
-        <item
-            android:id="@+id/nav_arwa"
-            android:icon="@drawable/area"
-            android:title="地域城市" />
+            android:title="美图分类" />
     </group>
 
     <item android:title="关于">
