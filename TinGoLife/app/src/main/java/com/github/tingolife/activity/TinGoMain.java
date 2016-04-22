@@ -157,80 +157,17 @@ public class TinGoMain extends BaseActivity
         oks.setDialogMode();
         // 在自动授权时可以禁用SSO方式
         oks.disableSSOWhenAuthorize();
-        //oks.setAddress("12345678901"); //分享短信的号码和邮件的地址
-        oks.setTitle("ShareSDK--Title");
-        oks.setTitleUrl("http://mob.com");
-        oks.setText("ShareSDK--文本");
-        //oks.setImagePath("/sdcard/test-pic.jpg");  //分享sdcard目录下的图片
-        oks.setImageUrl(randomPic()[0]);
+        oks.setTitle("美图社区");
+        oks.setTitleUrl("https://github.com/babylikebird/TinGoLife");
+        oks.setText("喜欢看赏心悦目的图片吗？那就来美悦看看吧");
+        oks.setImageUrl("http://a.hiphotos.baidu.com/zhidao/pic/item/728da9773912b31bb82f07408418367adab4e11c.jpg");
         oks.setUrl("http://www.mob.com"); //微信不绕过审核分享链接
-        //oks.setFilePath("/sdcard/test-pic.jpg");  //filePath是待分享应用程序的本地路劲，仅在微信（易信）好友和Dropbox中使用，否则可以不提供
-        oks.setComment("分享"); //我对这条分享的评论，仅在人人网和QQ空间使用，否则可以不提供
-        oks.setSite("ShareSDK");  //QZone分享完之后返回应用时提示框上显示的名称
+        oks.setSite("美悦");  //QZone分享完之后返回应用时提示框上显示的名称
         oks.setSiteUrl("http://mob.com");//QZone分享参数
-        oks.setVenueName("ShareSDK");
-        oks.setVenueDescription("This is a beautiful place!");
-        // 将快捷分享的操作结果将通过OneKeyShareCallback回调
-        //oks.setCallback(new OneKeyShareCallback());
-        // 去自定义不同平台的字段内容
-        //oks.setShareContentCustomizeCallback(new ShareContentCustomizeDemo());
-        // 在九宫格设置自定义的图标
-        Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
-        String label = "ShareSDK";
-        View.OnClickListener listener = new View.OnClickListener() {
-            public void onClick(View v) {
-
-            }
-        };
-        oks.setCustomerLogo(logo, label, listener);
-
-        // 为EditPage设置一个背景的View
-        //oks.setEditPageBackground(getPage());
-        // 隐藏九宫格中的新浪微博
-        // oks.addHiddenPlatform(SinaWeibo.NAME);
-
-        // String[] AVATARS = {
-        // 		"http://99touxiang.com/public/upload/nvsheng/125/27-011820_433.jpg",
-        // 		"http://img1.2345.com/duoteimg/qqTxImg/2012/04/09/13339485237265.jpg",
-        // 		"http://diy.qqjay.com/u/files/2012/0523/f466c38e1c6c99ee2d6cd7746207a97a.jpg",
-        // 		"http://diy.qqjay.com/u2/2013/0422/fadc08459b1ef5fc1ea6b5b8d22e44b4.jpg",
-        // 		"http://img1.2345.com/duoteimg/qqTxImg/2012/04/09/13339510584349.jpg",
-        // 		"http://diy.qqjay.com/u2/2013/0401/4355c29b30d295b26da6f242a65bcaad.jpg" };
-        // oks.setImageArray(AVATARS);              //腾讯微博和twitter用此方法分享多张图片，其他平台不可以
-
+        oks.setVenueName("美悦");
+        oks.setVenueDescription("喜欢看赏心悦目的图片吗？那就来美悦看看吧");
         // 启动分享
         oks.show(context);
     }
 
-    public static String[] randomPic() {
-        String url = "http://git.oschina.net/alexyu.yxj/MyTmpFiles/raw/master/kmk_pic_fld/";
-        String urlSmall = "http://git.oschina.net/alexyu.yxj/MyTmpFiles/raw/master/kmk_pic_fld/small/";
-        String[] pics = new String[] {
-                "120.JPG",
-                "127.JPG",
-                "130.JPG",
-                "18.JPG",
-                "184.JPG",
-                "22.JPG",
-                "236.JPG",
-                "237.JPG",
-                "254.JPG",
-                "255.JPG",
-                "263.JPG",
-                "265.JPG",
-                "273.JPG",
-                "37.JPG",
-                "39.JPG",
-                "IMG_2219.JPG",
-                "IMG_2270.JPG",
-                "IMG_2271.JPG",
-                "IMG_2275.JPG",
-                "107.JPG"
-        };
-        int index = (int) (System.currentTimeMillis() % pics.length);
-        return new String[] {
-                url + pics[index],
-                urlSmall + pics[index]
-        };
-    }
 }
