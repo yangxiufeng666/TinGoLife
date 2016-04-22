@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
     </android.support.design.widget.AppBarLayout>
     <RelativeLayout
         android:id="@+id/clear"
@@ -17,13 +22,12 @@
         android:layout_height="36dp"
         android:layout_marginTop="10dp"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:clickable="true"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/background_dark"
             android:layout_centerVertical="true"
             android:textSize="14sp"
             android:text="手动清除缓存"/>
@@ -34,7 +38,93 @@
             android:textColor="@android:color/darker_gray"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:textSize="14sp"
             android:text=""/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/darker_gray"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="16dp"
+        android:layout_height="36dp"
+        android:clickable="true"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/background_dark"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:text="推送通知"/>
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/switch_push"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/darker_gray"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/check_update"
+        android:layout_width="match_parent"
+        android:paddingLeft="16dp"
+        android:layout_height="36dp"
+        android:clickable="true"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/background_dark"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:text="检查更新"/>
+        <TextView
+            android:id="@+id/current_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:textSize="14sp"
+            android:text="v1.0.1"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/darker_gray"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:paddingLeft="16dp"
+        android:layout_height="36dp"
+        android:clickable="true"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/background_dark"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:text="关于"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/darker_gray"/>
     </RelativeLayout>
 </LinearLayout>

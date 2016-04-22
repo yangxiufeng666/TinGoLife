@@ -7,8 +7,8 @@ android {
         applicationId "com.github.tingolife"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 101
+        versionName "1.0.1"
         ndk {
             //设置支持的SO库架构
             abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
@@ -25,7 +25,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.tencent.bugly:crashreport:2.1' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.9
+    compile 'com.tencent.bugly:crashreport:2.1'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.9
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:cardview-v7:23.1.1'
@@ -45,4 +46,15 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    compile files('libs/MobCommons-2016.0406.1915.jar')
+    compile files('libs/MobTools-2016.0406.1915.jar')
+    compile files('libs/ShareSDK-Core-2.7.1.jar')
+    compile files('libs/ShareSDK-QQ-2.7.1.jar')
+    compile files('libs/ShareSDK-QZone-2.7.1.jar')
+    compile files('libs/ShareSDK-SinaWeibo-2.7.1.jar')
+    compile files('libs/ShareSDK-TencentWeibo-2.7.1.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.1.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.1.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-2.7.1.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.1.jar')
 }

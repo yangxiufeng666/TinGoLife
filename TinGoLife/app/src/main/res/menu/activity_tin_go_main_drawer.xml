@@ -21,12 +21,8 @@
                 android:title="分享" />
             <item
                 android:id="@+id/nav_setting"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_settings_black_18dp"
                 android:title="设置" />
-            <item
-                android:id="@+id/about"
-                android:icon="@android:drawable/ic_menu_day"
-                android:title="关于" />
         </menu>
     </item>
 

@@ -43,6 +43,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
                 .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
+        setHasStableIds(true);
     }
 
     @Override
@@ -83,5 +84,10 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
             title = (TextView)itemView.findViewById(R.id.picture_title);
             root = itemView;
         }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }
