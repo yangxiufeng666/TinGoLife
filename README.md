@@ -7,11 +7,17 @@ Download
 
 ## Dependencies
 [butterknife](https://github.com/JakeWharton/butterknife)
+######
 [systembartint](https://github.com/jgilfelt/SystemBarTint)
+######
 [okhttp](https://github.com/square/okhttp)
+######
 [universal-image-loader](https://github.com/nostra13/Android-Universal-Image-Loader)
+######
 [gson](https://github.com/google/gson)
+######
 [PhotoView](https://github.com/chrisbanes/PhotoView)
+######
 [material-dialogs](https://github.com/afollestad/material-dialogs)
 
 
