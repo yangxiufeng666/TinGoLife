@@ -94,13 +94,13 @@ public class PictureFragment extends Fragment{
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE||newState == RecyclerView.SCROLL_STATE_SETTLING){
                     ImageLoader.getInstance().resume();
                 }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == pictureAdapter.getItemCount() && hasMore) {
                     swipeRefreshLayout.setRefreshing(true);
                     initData(id, 20, pageNum);
-                }else if (newState == RecyclerView.SCROLL_STATE_DRAGGING||newState == RecyclerView.SCROLL_STATE_SETTLING){
+                }else if (newState == RecyclerView.SCROLL_STATE_DRAGGING){
                     ImageLoader.getInstance().pause();
                 }
             }

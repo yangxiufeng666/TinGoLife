@@ -53,6 +53,7 @@ public class LatestPictureFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView != null) {
+            ButterKnife.bind(this, rootView);
             return rootView;
         }
         rootView = inflater.inflate(R.layout.picture_fragment, container, false);
