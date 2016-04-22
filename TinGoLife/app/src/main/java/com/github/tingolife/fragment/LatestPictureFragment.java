@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,6 +48,7 @@ public class LatestPictureFragment extends Fragment {
     private PictureAdapter pictureAdapter;
     private StaggeredGridLayoutManager layoutManager;
     String tagUrl;
+    int classify;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,7 +80,8 @@ public class LatestPictureFragment extends Fragment {
         return rootView;
     }
     private void initData(){
-        tagUrl = TinGoApi.PIC_LATEST;
+        getRandom();
+        tagUrl = TinGoApi.PIC_LATEST+"?"+"rows=30&classify="+classify;
         OkHttpManager.getOkHttpManager().asyncGet(tagUrl, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
@@ -100,6 +103,19 @@ public class LatestPictureFragment extends Fragment {
             }
         });
     }
+
+    private int getRandom() {
+        Random random = new Random();
+        int ran = random.nextInt(8);
+        if (classify != ran){
+            classify = ran;
+            return classify;
+        }else{
+            classify = getRandom();
+        }
+        return classify;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -3,13 +3,8 @@ package com.github.tingolife.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -20,46 +15,64 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.tingolife.R;
 import com.github.tingolife.fragment.LatestPictureFragment;
 import com.github.tingolife.fragment.PictureParentFragment;
 
-import java.io.File;
-
-import cn.sharesdk.framework.ShareSDK;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.OnekeyShareTheme;
 
 public class TinGoMain extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    //    @Bind(R.id.fab)
+//    FloatingActionButton fab;
+    @Bind(R.id.nav_view)
+    NavigationView navigationView;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    @Bind(R.id.action_share)
+    FloatingActionButton actionShare;
+    @Bind(R.id.action_settings)
+    FloatingActionButton actionSettings;
+    @Bind(R.id.multiple_actions)
+    FloatingActionsMenu multipleActions;
     private PictureParentFragment pictureFragment;
     private LatestPictureFragment latestPictureFragment;
-    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tin_go_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        actionShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                showShare(TinGoMain.this, null, true);
+                multipleActions.collapse();
             }
         });
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        actionSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                multipleActions.collapse();
+                Intent intent = new Intent(TinGoMain.this, SettingActivity.class);
+                startActivity(intent);
+            }
+        });
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_latest_gallery);
-        if (latestPictureFragment == null){
+        if (latestPictureFragment == null) {
             latestPictureFragment = new LatestPictureFragment();
         }
         setFragment(latestPictureFragment);
@@ -109,9 +122,9 @@ public class TinGoMain extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.nav_gallery:
-                if (pictureFragment == null){
+                if (pictureFragment == null) {
                     pictureFragment = new PictureParentFragment();
                 }
                 if (!pictureFragment.isVisible()) {
@@ -119,31 +132,32 @@ public class TinGoMain extends BaseActivity
                 }
                 break;
             case R.id.nav_latest_gallery:
-                if (latestPictureFragment == null){
+                if (latestPictureFragment == null) {
                     latestPictureFragment = new LatestPictureFragment();
                 }
-                if (!latestPictureFragment.isVisible()){
+                if (!latestPictureFragment.isVisible()) {
                     setFragment(latestPictureFragment);
                 }
                 break;
             case R.id.nav_setting:
-                Intent intent = new Intent(this,SettingActivity.class);
+                Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_share:
-                showShare(TinGoMain.this,null,false);
+                showShare(TinGoMain.this, null, false);
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     /**
      * 演示调用ShareSDK执行分享
      *
      * @param context
-     * @param platformToShare  指定直接分享平台名称（一旦设置了平台名称，则九宫格将不会显示）
-     * @param showContentEdit  是否显示编辑页
+     * @param platformToShare 指定直接分享平台名称（一旦设置了平台名称，则九宫格将不会显示）
+     * @param showContentEdit 是否显示编辑页
      */
     public static void showShare(Context context, String platformToShare, boolean showContentEdit) {
         OnekeyShare oks = new OnekeyShare();
