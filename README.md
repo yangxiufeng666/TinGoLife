@@ -23,6 +23,14 @@ Download
 
 ##show
 ![](https://github.com/babylikebird/TinGoLife/blob/master/TinGoLife/show.gif)
+#版本说明
+###### 2016-4-22 v2.0.0
+*优化recycleview加载图片的效果<br>
+*增加mob分享<br>
+*增加设置页面<br>
+
+###### 2016-4-5 v1.0.0
+*init<br>
 
 感谢
 ===
