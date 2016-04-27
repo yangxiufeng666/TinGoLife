@@ -20,6 +20,8 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.tingolife.R;
 import com.github.tingolife.fragment.LatestPictureFragment;
 import com.github.tingolife.fragment.PictureParentFragment;
+import com.github.tingolife.utils.ImageloaderUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,8 +32,6 @@ public class TinGoMain extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    //    @Bind(R.id.fab)
-//    FloatingActionButton fab;
     @Bind(R.id.nav_view)
     NavigationView navigationView;
     @Bind(R.id.drawer_layout)
@@ -106,6 +106,7 @@ public class TinGoMain extends BaseActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
+                            ImageLoader.getInstance().destroy();
                             finish();
                         }
                     }).setNegativeButton("再看看", new DialogInterface.OnClickListener() {

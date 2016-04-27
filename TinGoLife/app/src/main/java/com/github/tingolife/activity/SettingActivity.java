@@ -3,23 +3,22 @@ package com.github.tingolife.activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.tingolife.R;
-import com.kyleduo.switchbutton.SwitchButton;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
 import java.text.DecimalFormat;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created with com.github.tingolife.activity
@@ -35,13 +34,15 @@ public class SettingActivity extends BaseActivity {
     @Bind(R.id.clear)
     RelativeLayout clearCache;
     @Bind(R.id.switch_push)
-    SwitchButton switchPush;
+    SwitchCompat switchPush;
     @Bind(R.id.current_version)
     TextView currentVersion;
     @Bind(R.id.check_update)
     RelativeLayout checkUpdate;
     @Bind(R.id.about)
     RelativeLayout about;
+    @Bind(R.id.push_toggle_layout)
+    RelativeLayout pushToggleLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +53,17 @@ public class SettingActivity extends BaseActivity {
         getSupportActionBar().setTitle("设置");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitleTextColor(0xffffffff);
-        currentVersion.setText("v"+getVersion());
+        currentVersion.setText("v" + getVersion());
         clearCache.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ImageLoader.getInstance().clearDiskCache();
+                cacheSize.setText("0.00M");
             }
         });
-        DecimalFormat fnum = new DecimalFormat( "##0.00");
-        String  dd=fnum.format(getDirSize(ImageLoader.getInstance().getDiskCache().getDirectory()));
-        cacheSize.setText(dd+"M");
+        DecimalFormat fnum = new DecimalFormat("##0.00");
+        String dd = fnum.format(getDirSize(ImageLoader.getInstance().getDiskCache().getDirectory()));
+        cacheSize.setText(dd + "M");
     }
 
 
@@ -74,6 +76,7 @@ public class SettingActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     public float getDirSize(File file) {
         //判断文件是否存在
         if (file.exists()) {
@@ -92,14 +95,19 @@ public class SettingActivity extends BaseActivity {
             return 0.0f;
         }
     }
-    private String getVersion(){
+
+    private String getVersion() {
         PackageManager manager = this.getPackageManager();
         try {
-            PackageInfo packageInfo = manager.getPackageInfo(this.getPackageName(),0);
+            PackageInfo packageInfo = manager.getPackageInfo(this.getPackageName(), 0);
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         return "";
+    }
+    @OnClick(R.id.push_toggle_layout)
+    protected void pushToggleLayoutClick(){
+        switchPush.toggle();
     }
 }

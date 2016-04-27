@@ -19,10 +19,10 @@
     <RelativeLayout
         android:id="@+id/clear"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="16dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:clickable="true"
+        android:background="?attr/selectableItemBackground"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
             android:textColor="@android:color/background_dark"
             android:layout_centerVertical="true"
             android:textSize="14sp"
-            android:text="手动清除缓存"/>
+            android:text="清除缓存"/>
         <TextView
             android:id="@+id/cacheSize"
             android:layout_width="wrap_content"
@@ -41,19 +41,19 @@
             android:layout_marginRight="10dp"
             android:textSize="14sp"
             android:text=""/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/darker_gray"/>
+
     </RelativeLayout>
-    <RelativeLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:paddingLeft="16dp"
-        android:layout_height="36dp"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"/>
+    <RelativeLayout
+        android:id="@+id/push_toggle_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:clickable="true"
-        android:layout_marginTop="10dp">
+        android:background="?attr/selectableItemBackground">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,27 +61,50 @@
             android:layout_centerVertical="true"
             android:textSize="14sp"
             android:text="推送通知"/>
-        <com.kyleduo.switchbutton.SwitchButton
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/switch_push"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
+            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/darker_gray"/>
     </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/background_dark"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:text="非Wifi网络加载图片"/>
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_load_image_non_wifi"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:checked="true"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"/>
     <RelativeLayout
         android:id="@+id/check_update"
         android:layout_width="match_parent"
-        android:paddingLeft="16dp"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:clickable="true"
-        android:layout_marginTop="10dp">
+        android:background="?attr/selectableItemBackground">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,20 +122,18 @@
             android:layout_marginRight="10dp"
             android:textSize="14sp"
             android:text="v1.0.1"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/darker_gray"/>
     </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"/>
     <RelativeLayout
         android:id="@+id/about"
         android:layout_width="match_parent"
-        android:paddingLeft="16dp"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:clickable="true"
-        android:layout_marginTop="10dp">
+        android:background="?attr/selectableItemBackground">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,11 +141,9 @@
             android:layout_centerVertical="true"
             android:textSize="14sp"
             android:text="关于"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/darker_gray"/>
     </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"/>
 </LinearLayout>
