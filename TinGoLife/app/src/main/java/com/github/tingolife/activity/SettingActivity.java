@@ -1,17 +1,26 @@
 package com.github.tingolife.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.tingolife.R;
+import com.github.tingolife.utils.PreferenceUtils;
+import com.github.tingolife.utils.Util;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tencent.android.tpush.XGPushManager;
+import com.tencent.android.tpush.service.XGPushService;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -43,7 +52,6 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout about;
     @Bind(R.id.push_toggle_layout)
     RelativeLayout pushToggleLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +70,27 @@ public class SettingActivity extends BaseActivity {
             }
         });
         DecimalFormat fnum = new DecimalFormat("##0.00");
-        String dd = fnum.format(getDirSize(ImageLoader.getInstance().getDiskCache().getDirectory()));
+        String dd = fnum.format(Util.getDirSize(ImageLoader.getInstance().getDiskCache().getDirectory()));
         cacheSize.setText(dd + "M");
+        boolean isOpenPush = PreferenceUtils.getPrefBoolean(getApplicationContext(),"isOpenPush",true);
+        switchPush.setChecked(isOpenPush);
+        switchPush.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked){
+                    // 反注册，调用本接口后，APP将停止接收通知和消息
+                    XGPushManager.unregisterPush(getApplicationContext());
+                }else {
+                    Context context = getApplicationContext();
+                    XGPushManager.registerPush(context);
+                    // 2.36（不包括）之前的版本需要调用以下2行代码
+                    Intent service = new Intent(context, XGPushService.class);
+                    context.startService(service);
+                }
+                PreferenceUtils.setPrefBoolean(getApplicationContext(),"isOpenPush",isChecked);
+            }
+        });
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -75,25 +99,6 @@ public class SettingActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public float getDirSize(File file) {
-        //判断文件是否存在
-        if (file.exists()) {
-            //如果是目录则递归计算其内容的总大小
-            if (file.isDirectory()) {
-                File[] children = file.listFiles();
-                float size = 0;
-                for (File f : children)
-                    size += getDirSize(f);
-                return size;
-            } else {//如果是文件则直接返回其大小,以“兆”为单位
-                float size = (float) file.length() / 1024 / 1024;
-                return size;
-            }
-        } else {
-            return 0.0f;
-        }
     }
 
     private String getVersion() {

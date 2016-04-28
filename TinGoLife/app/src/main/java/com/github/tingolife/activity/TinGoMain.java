@@ -11,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -20,8 +21,10 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.tingolife.R;
 import com.github.tingolife.fragment.LatestPictureFragment;
 import com.github.tingolife.fragment.PictureParentFragment;
-import com.github.tingolife.utils.ImageloaderUtil;
+import com.github.tingolife.utils.PreferenceUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tencent.android.tpush.XGPushManager;
+import com.tencent.android.tpush.service.XGPushService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -76,8 +79,25 @@ public class TinGoMain extends BaseActivity
             latestPictureFragment = new LatestPictureFragment();
         }
         setFragment(latestPictureFragment);
+        initXinGePush();
     }
-
+    private void initXinGePush(){
+        boolean isOpenPush = PreferenceUtils.getPrefBoolean(getApplicationContext(),"isOpenPush",true);
+        Log.e("isOpen","isOpen="+isOpenPush);
+        if (isOpenPush){
+            // 开启logcat输出，方便debug，发布时请关闭
+//            XGPushConfig.enableDebug(this, true);
+            // 如果需要知道注册是否成功，请使用registerPush(getApplicationContext(), XGIOperateCallback)带callback版本
+            // 如果需要绑定账号，请使用registerPush(getApplicationContext(),account)版本
+            // 具体可参考详细的开发指南
+            // 传递的参数为ApplicationContext
+            Context context = getApplicationContext();
+            XGPushManager.registerPush(context);
+            // 2.36（不包括）之前的版本需要调用以下2行代码
+            Intent service = new Intent(context, XGPushService.class);
+            context.startService(service);
+        }
+    }
     private void setFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_fragment, fragment);
@@ -106,7 +126,6 @@ public class TinGoMain extends BaseActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            ImageLoader.getInstance().destroy();
                             finish();
                         }
                     }).setNegativeButton("再看看", new DialogInterface.OnClickListener() {
